@@ -1,0 +1,246 @@
+@layer reset, base, components;
+
+/* ─────────────────────────────────────────────────────────────
+   RESET
+   ───────────────────────────────────────────────────────────── */
+@layer reset {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  body,
+  h1,
+  h2,
+  p,
+  ul,
+  figure {
+    margin: 0;
+  }
+
+  ul {
+    padding: 0;
+    list-style: none;
+  }
+
+  img {
+    display: block;
+    max-width: 100%;
+  }
+
+  button {
+    font: inherit;
+    cursor: pointer;
+    border: 0;
+    background: none;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   BASE  —  fonts, design tokens, body
+   ───────────────────────────────────────────────────────────── */
+@layer base {
+  @font-face {
+    font-family: 'Hanken Grotesk';
+    src: url('./assets/fonts/HankenGrotesk-VariableFont_wght.ttf') format('truetype-variations');
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  :root {
+    /* category colors (also used by JS via the COLORS map) */
+    --color-reaction: oklch(0.6843 0.2045 24.3);
+    --color-memory:   oklch(0.8139 0.1654 75.39);
+    --color-verbal:   oklch(0.7085 0.1426 168.5);
+    --color-visual:   oklch(0.4208 0.2542 265.77);
+
+    /* header background gradient */
+    --gradient-bg-start: oklch(0.5884 0.2364 285.76);
+    --gradient-bg-end:   oklch(0.4611 0.2661 270.02);
+
+    /* score circle radial gradient */
+    --gradient-circle-start: oklch(0.4388 0.2322 283.49);
+    --gradient-circle-end:   oklch(0.4102 0.2416 269.47 / 0%);
+
+    /* neutrals */
+    --color-white:          oklch(1 0 0);
+    --color-pale-blue:      oklch(0.9575 0.02 265.9);
+    --color-light-lavender: oklch(0.8491 0.0778 285.38);
+    --color-dark-gray-blue: oklch(0.3576 0.0549 268.3);
+
+    /* radii */
+    --radius-card:   32px;
+    --radius-row:    12px;
+    --radius-button: 32px;
+  }
+
+  html,
+  body {
+    font-family: 'Hanken Grotesk', system-ui, -apple-system, sans-serif;
+    font-size: 18px;
+    line-height: 1.4;
+    color: var(--color-dark-gray-blue);
+  }
+
+  body {
+    background: var(--color-pale-blue);
+    min-height: 100dvh;
+    display: grid;
+    place-items: center;
+    padding: 0;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   COMPONENTS  —  card, result, summary, button
+   ───────────────────────────────────────────────────────────── */
+@layer components {
+  /* the card container — mobile-first single column */
+  .card {
+    width: 100%;
+    max-width: 736px;
+    background: var(--color-white);
+    border-radius: var(--radius-card);
+    overflow: hidden;
+    box-shadow: 0 30px 60px rgba(61, 108, 185, 0.15);
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  /* ── result section ─────────────────────────────────────── */
+  .result {
+    background: linear-gradient(180deg, var(--gradient-bg-start), var(--gradient-bg-end));
+    color: var(--color-white);
+    text-align: center;
+    padding: 38px 50px 48px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+  }
+
+  .result__title {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--color-light-lavender);
+    letter-spacing: 0.02em;
+  }
+
+  .result__score {
+    width: 200px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--gradient-circle-start), var(--gradient-circle-end));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+  }
+
+  .result__score-number {
+    font-size: 4rem;
+    font-weight: 800;
+    line-height: 1;
+    color: var(--color-white);
+  }
+
+  .result__score-of {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--color-light-lavender);
+  }
+
+  .result__rating {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-white);
+  }
+
+  .result__description {
+    font-size: 0.95rem;
+    color: var(--color-light-lavender);
+    max-width: 240px;
+    line-height: 1.3;
+  }
+
+  /* ── summary section ────────────────────────────────────── */
+  .summary {
+    background: var(--color-white);
+    padding: 38px 40px 48px;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+
+  .summary__title {
+    font-size: 1.125rem;
+    font-weight: 700;
+  }
+
+  .summary__list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .summary__row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    border-radius: var(--radius-row);
+    background: oklch(from var(--cat-color) l c h / 0.1);
+  }
+
+  .summary__icon {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+  }
+
+  .summary__category {
+    font-weight: 700;
+    color: var(--cat-color);
+  }
+
+  .summary__score {
+    margin-left: auto;
+    font-weight: 700;
+    color: var(--color-light-lavender);
+  }
+
+  .summary__score strong {
+    color: var(--color-dark-gray-blue);
+  }
+
+  /* ── continue button ────────────────────────────────────── */
+  .summary__continue {
+    margin-top: auto;
+    padding: 16px;
+    border-radius: var(--radius-button);
+    background: var(--color-dark-gray-blue);
+    color: var(--color-white);
+    font-weight: 700;
+    transition: background 0.2s ease;
+  }
+
+  .summary__continue:hover {
+    background: oklch(from var(--color-dark-gray-blue) calc(l * 1.4) c h);
+  }
+
+  .summary__continue:focus-visible {
+    outline: 2px solid var(--color-dark-gray-blue);
+    outline-offset: 4px;
+  }
+
+  /* ── responsive: two-column on desktop ──────────────────── */
+  @media (min-width: 600px) {
+    .card {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+}
